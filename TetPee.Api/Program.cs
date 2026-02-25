@@ -1,3 +1,7 @@
+using Microsoft.EntityFrameworkCore;
+using TetPee.Api.Middiewares;
+using TetPee.Repository;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,7 +11,17 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(
+        builder.Configuration.GetConnectionString("DefaultConnection")
+    )
+);// đăng ký dịch vụ truy xuất cho database và phải nạp thêm
+
+builder.Services.AddTransient<GlobalExceptionHandlerMiddlewares>();
+
 var app = builder.Build();
+
+app.UseMiddleware<GlobalExceptionHandlerMiddlewares>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

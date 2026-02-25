@@ -1,0 +1,100 @@
+using Microsoft.AspNetCore.Mvc;
+using TetPee.Repository;
+using TetPee.Repository.Entity;
+using TetPee.Service.User;
+
+namespace TetPee.Api.Controllers;
+
+//khai báo các Api có trong hệ thống
+[ApiController]
+[Route("[controller]")]
+public class UserController : ControllerBase
+{
+   private readonly AppDbContext _dbContext;
+   //cái này nâng cao lúc sau sẽ giải thích
+   public UserController(AppDbContext dbContext)
+    {
+        _dbContext = dbContext;
+    }
+   
+    // HTTP METHOD: GET, POST, DELETE, PUT, PATCH
+    // PARAM: Query string, Path Param, Body Param
+    
+    //Query String: http://localhost:5000/User?name=abc&age=20
+    // name va age là query string
+    // Query string nằm sau dấu hỏi ?
+    //Path(Route) Param: http://localhost:5000/User/123
+    //123 là path pram hoact route praram
+    //Path param nằm trong đường dẫn
+    
+    // GET la 2ko có body
+    // POST, PUT, PATCH có body
+    
+    // Tại sao phải dùng body: Tránh để lộ những thông tin ko mong muốn
+    
+    //ví dụ: Username, Pass
+    // không thể http://localhost:5000/login?username=abc&password=123
+    
+    // Chuẩn REST FULL API
+    // get all users: GET http://localhost:5000/User
+    // create user: POST http://localhost:5000/User
+    // get user by id: GET http://localhost:5000/User/{id}
+    // update user by id: PUT http://localhost:5000/User/{id}
+    // delete user by id: DELETE http://localhost:5000/User/{id}
+    
+  
+    [HttpPost(template: "")]
+    public IActionResult CreateUsers([FromBody] Request.CreateUserRequest request)
+    {
+        var user = new User()
+        {
+            Email = request.Email,
+            FirstName = request.FirstName,
+            LastName = request.LastName,
+            HashedPassword = request.Password,
+        };
+        
+        _dbContext.Users.Add(user);
+        
+        _dbContext.SaveChanges();
+        
+        return Ok("Create user successfully");
+    }
+    
+      
+    [HttpGet(template: "{id}")]
+    public IActionResult GetUserById(Guid id)
+    {
+        // var users = _dbContext.Users.ToList();
+        // return Ok(users);
+        return Ok("Get all users");
+    }
+    
+    [HttpDelete(template: "{id}")]
+    public IActionResult DeleteUserById(Guid id)
+    {
+        // var users = _dbContext.Users.ToList();
+        // return Ok(users);
+        return Ok("Get all users");
+    }
+    
+    [HttpPut(template: "{id}")]
+    public IActionResult UpdateUserById(Guid id, [FromBody] Request.UpdateUserRequest request)
+    {
+        // var users = _dbContext.Users.ToList();
+        // return Ok(users);
+        return Ok("Get all users");
+    }
+
+    
+    [HttpGet("")]
+    public IActionResult GetUsers([FromQuery]string? searchTerm)
+    {
+        var users = _dbContext.Users.ToList();
+        throw new Exception("Get users Errors");
+        // return Ok(users);
+        return Ok(users);
+    }
+    
+    
+}
