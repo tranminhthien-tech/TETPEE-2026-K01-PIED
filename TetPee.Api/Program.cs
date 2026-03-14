@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using TetPee.Api.Middiewares;
 using TetPee.Repository;
+using TetPee.Service.User;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     )
 );// đăng ký dịch vụ truy xuất cho database và phải nạp thêm
 
+builder.Services.AddScoped<IService, Service>();
 builder.Services.AddTransient<GlobalExceptionHandlerMiddlewares>();
 
 var app = builder.Build();

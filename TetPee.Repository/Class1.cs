@@ -28,7 +28,7 @@
     }
 //3 tầng : tầng đầu Api: khai báo Api 
 // tầng service: sử lí các logic nghiệp vụ của hệ thông
-// tầng repository: thng6 tác với database thao tác truy vấn dữ liệu với dbs
+// tầng repository: tương tác với database thao tác truy vấn dữ liệu với dbs
 
 // API(Khai báo API và 1 vài setup):  Gọi đến Service
 //       Và khai báo API
