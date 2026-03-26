@@ -10,4 +10,10 @@
       <ProjectReference Include="..\TetPee.Repository\TetPee.Repository.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="CloudinaryDotNet" Version="1.28.0" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="10.0.1" />
+      <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.16.0" />
+    </ItemGroup>
+
 </Project>
